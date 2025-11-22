@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | Sanipini Yagneswar</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #14142b;
+      --bg-light: #0a0a1a;
+      --accent: #6c63ff;
+      --accent-hover: #584ff0;
+      --accent2: #00d4ff;
+      --text: #f5f5f5;
+    }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text);
+      scroll-behavior: smooth;
+    }
+    .navbar {
+      background-color: var(--bg-dark) !important;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    }
+    .navbar-brand { color: var(--accent) !important; font-weight: bold; }
+    .nav-link {
+      color: var(--text) !important;
+      transition: 0.3s;
+    }
+    .nav-link.active, .nav-link:hover {
+      color: var(--accent) !important;
+    }
+    section {
+      padding: 100px 0;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease-out;
+    }
+    section.visible { opacity: 1; transform: translateY(0); }
+    #about, #experience, #skills , #home, #education, #projects, #contact { background-color: var(--bg-light); }
+  
+    section {
+  scroll-margin-top: 90px; /* Set this to your navbar height + desired gap */
+}
+/* Optionally use a narrower gap for mobile: */
+@media (max-width: 767px) {
+  section {
+    scroll-margin-top: 65px; /* Smaller gap for mobile nav */
+  }
+}
+
+    /* Base card styling for all sections */
+    .card {
+      background: #17172a;
+      border-radius: 1rem;
+      color: #f5f5f5;
+      border: 1px solid rgba(0,212,255,0.24);
+      box-shadow: 0 6px 24px -2px rgba(108,99,255,0.20), 0 1.5px 4px 0 rgba(0,0,0,0.16);
+      padding: 1rem;
+      transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
+    }
+
+    /* Neon Glow on hover for ALL cards */
+    .card:hover, .card:focus-visible {
+      border: 1.5px solid #00d4ff;
+      box-shadow:
+        0 0 44px 14px #00d4ffcc,
+        0 0 80px 18px #00d4ff44,
+        0 0 6px 2.4px #00d4ff99 inset;
+      transform: translateY(-5px) scale(1.03);
+      z-index: 1;
+    }
+
+    .card-title { color: var(--accent); }
+    .card-img-top {
+      object-fit: cover;
+      height: 180px;
+      width: 100%;
+    }
+    @media (max-width: 767px) { .card-img-top { height: 140px; } }
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bg-light);
+      text-align: center;
+    }
+    #home p { color: #d1d5db; font-size: 1.1rem; line-height: 1.7; max-width: 550px; margin: auto; }
+    #home h3 span.text-accent {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .image-wrapper {
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      overflow: hidden;
+      padding: 8px;
+      position: relative;
+      box-shadow: 0 0 30px rgba(108,99,255,0.45);
+      animation: glowPulse 3s infinite alternate;
+    }
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    @keyframes glowPulse {
+      from { box-shadow: 0 0 15px rgba(108,99,255,0.35); }
+      to { box-shadow: 0 0 30px rgba(108,99,255,0.85); }
+    }
+
+    .btn-accent {
+      background-color: var(--accent);
+      color: #fff !important;
+      border: none;
+      transition: 0.3s;
+    }
+    .btn-accent:hover {
+      background-color: var(--accent-hover);
+      box-shadow: 0 0 15px var(--accent-hover);
+      color: #fff !important;
+    }
+    .btn-social {
+      background-color: transparent;
+      color: var(--accent2);
+      border: 2px solid var(--accent2);
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.3s, box-shadow 0.3s;
+      position: relative;
+      box-shadow: 0 0 12px var(--accent2), 0 0 6px var(--accent2) inset;
+      animation: social-glow 1.8s infinite alternate;
+    }
+    @keyframes social-glow {
+      from {
+        box-shadow:
+          0 0 8px var(--accent2),
+          0 0 2px var(--accent2) inset;
+      }
+      to {
+        box-shadow:
+          0 0 28px var(--accent2),
+          0 0 12px var(--accent2) inset;
+      }
+    }
+    .btn-social:hover {
+      background-color: var(--accent2);
+      color: var(--bg-dark);
+      transform: translateY(-3px) scale(1.08);
+      box-shadow: 0 0 36px 8px var(--accent2), 0 0 16px var(--accent2) inset;
+    }
+    #backToTop {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.3rem;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px var(--accent);
+      transition: 0.3s;
+      z-index: 1000;
+    }
+    #backToTop:hover {
+      background-color: var(--accent-hover);
+      box-shadow: 0 0 20px var(--accent-hover);
+    }
+    section p { color: #bfc7d0; }
+
+    /* Gentle neon for section headings */
+    h2, .section-title {
+      color: #6c63ff;
+      text-shadow: 0 0 18px #00d4ff, 0 0 2px #fff;
+    }
+
+    /* .skills-img { max-width: 400px; height: auto; display:block; margin-bottom:20px; } */
+  </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="70" tabindex="0">
+
+  <!-- ===== Navbar ===== -->
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="#home">Portfolio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
+          <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== Home Section ===== -->
+<section id="home" class="d-flex align-items-center justify-content-center text-white">
+  <div class="container">
+    <div class="row align-items-center justify-content-center min-vh-100">
+      <div class="col-12 col-md-6 text-center text-md-start d-flex flex-column justify-content-center align-items-center align-items-md-start">
+        <p class="mb-2 text-uppercase fw-semibold text-secondary">Hello, It's Me</p>
+        <h1 class="fw-bold display-5 mb-1">Sanipini Yagneswar</h1>
+        <h3 class="fw-semibold mb-4"> I'm an <span class="text-accent">Aspiring Data Scientist</span></h3>
+        <!-- <p class="mb-4">
+          Driven by a passion for empowering business decisions through data-driven insights.<br>
+          Proficient in <strong>Python</strong>, <strong>SQL</strong>, <strong>Machine Learning</strong>, and <strong>visualization tools</strong>, I excel at uncovering meaningful patterns and translating complex data into clear, actionable strategies.
+        </p> -->
+        <div class="mb-4 social-icons d-flex flex-wrap justify-content-center justify-content-md-start gap-3">
+          <a href="#" class="btn btn-social" data-bs-toggle="tooltip" title="LinkedIn" aria-label="LinkedIn Profile">
+            <i class="bi bi-linkedin"></i>
+          </a>
+          <a href="#" class="btn btn-social" data-bs-toggle="tooltip" title="GitHub" aria-label="GitHub Profile">
+            <i class="bi bi-github"></i>
+          </a>
+          <a href="#" class="btn btn-social" data-bs-toggle="tooltip" title="Blogger" aria-label="Blogger">
+            <i class="fab fa-blogger"></i>
+          </a>
+          <a href="#" class="btn btn-social" data-bs-toggle="tooltip" title="X (formerly Twitter)" aria-label="X (Twitter)">
+            <i class="fa-brands fa-x-twitter"></i>
+          </a>
+        </div>
+        <a href="#" class="btn btn-accent text-dark fw-semibold px-4 py-2 rounded-pill shadow">Download CV</a>
+      </div>
+      <div class="col-12 col-md-6 text-center mt-5 mt-md-0 d-flex justify-content-center align-items-center">
+        <div class="image-wrapper mx-auto position-relative glowing-border">
+          <img src="images/about/about.png" alt="Profile picture of Sanipini Yagneswar" class="img-fluid glowing-image" title="Sanipini Yagneswar">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- ===== About Section ===== -->
+  <section id="about" class="py-5 text-center">
+    <div class="container text-center">
+      <h2 class="fw-bold mb-5">About</h2>
+      <div class="row g-4 justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+              <div class="card p-4 h-100">
+                <p>I am passionate about unlocking insights from data to drive business results. My focus areas include Python programming, SQL databases, and the application of machine learning techniques. I thrive in roles that blend technical expertise with business understanding.</p>
+                <p>I enjoy working on end-to-end projects—from data cleaning and visualization to building and deploying analytical models.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Education Section ===== -->
+  <section id="education" class="py-5" style="background-color:var(--bg-light);">
+    <div class="container text-center">
+      <h2 class="fw-bold mb-5">Education</h2>
+      <div class="row g-4 justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+              <div class="card p-4 h-100">
+                <h5 class="fw-bold"><i class="bi bi-mortarboard-fill text-info me-2"></i>B.Tech in Computer Science and Engineering - Cybersecurity</h5>
+                <p class="text-info mb-1">GIET(A), Rajahmundry</p>
+                <p class="small text-secondary mb-3">2020 – 2024</p>
+                <p>Specialized in Cybersecurity, Ethical Hacking and Cryptography.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Experience Section ===== -->
+  <section id="experience" class="py-5 text-center">
+    <div class="container text-center">
+      <h2 class="fw-bold mb-5">Experience</h2>
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-5">
+          <div class="card p-4 h-100">
+            <h5 class="fw-bold"><i class="bi bi-briefcase-fill text-info me-2"></i>Data Science Intern</h5>
+            <p class="text-info mb-1">TechNova Solutions</p>
+            <p class="small text-secondary mb-3">Jan 2024 – Jun 2024</p>
+            <p>Worked on predictive modeling projects, data preprocessing, and dashboard creation using Python and Tableau.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Projects Section ===== -->
+  <section id="projects" class="py-5 text-center">
+    <div class="container">
+      <h2 class="fw-bold mb-5">Projects</h2>
+      <div class="row g-4">
+         <div class="col-md-4">
+          <div class="card h-100 p-3">
+            <img src="images/projects/da.png" class="card-img-top" alt="E-commerce Sales Dashboard" title="E-commerce Dashboard">
+            <div class="card-body">
+              <h5 class="card-title">E-commerce Dashboard</h5>
+              <p>Analyze and visualize sales KPIs, customer behavior, returns, and store performance to drive merchandising and marketing decisions.</p>
+              <!-- <p class="mb-2">
+                <span class="badge bg-secondary me-1">Python</span>
+                <span class="badge bg-secondary me-1">SQL</span>
+                <span class="badge bg-secondary me-1">Dashboarding</span>
+                <span class="badge bg-secondary me-1">Data Viz</span>
+                <span class="badge bg-secondary">A/B Testing</span>
+              </p> -->
+              <a href="#" class="btn btn-outline-info btn-sm" title="Read Blog Post">Blog Post</a>
+              <a href="#" class="btn btn-outline-light btn-sm ms-2" title="View Source Code">Source Code</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 p-3">
+            <img src="images/projects/churn.jpg" class="card-img-top" alt="Customer Churn Prediction" title="Customer Churn Prediction">
+            <div class="card-body">
+              <h5 class="card-title">Customer Churn Prediction — Telecom</h5>
+              <p>Develop a Scikit-learn pipeline to score churn risk, enabling targeted retention campaigns and CLTV optimization for telecom operators.</p>
+              <!-- <p class="mb-2">
+                <span class="badge bg-secondary me-1">Python</span>
+                <span class="badge bg-secondary me-1">Scikit-learn</span>
+                <span class="badge bg-secondary me-1">Feature Eng.</span>
+                <span class="badge bg-secondary me-1">Imbalanced Data</span>
+                <span class="badge bg-secondary">Model Deployment</span>
+              </p> -->
+              <a href="#" class="btn btn-outline-info btn-sm" title="Read Blog Post">Blog Post</a>
+              <a href="#" class="btn btn-outline-light btn-sm ms-2" title="View Source Code">Source Code</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 p-3">
+            <img src="images/projects/medical.png" class="card-img-top" alt="Medical Image Diagnostics" title="Medical Image Diagnostics">
+            <div class="card-body">
+              <h5 class="card-title">Medical Image Diagnostics — Healthcare</h5>
+              <p>Build CNN-based pipelines to detect pathologies from X-rays/cell images, including preprocessing, augmentation, and explainability for clinicians.</p>
+              <!-- <p class="mb-2">
+                <span class="badge bg-secondary me-1">Deep Learning</span>
+                <span class="badge bg-secondary me-1">PyTorch/TensorFlow</span>
+                <span class="badge bg-secondary me-1">Img Augmentation</span>
+                <span class="badge bg-secondary me-1">Interpretability</span>
+                <span class="badge bg-secondary">Clinical AI</span>
+              </p> -->
+              <a href="#" class="btn btn-outline-info btn-sm" title="Read Blog Post">Blog Post</a>
+              <a href="#" class="btn btn-outline-light btn-sm ms-2" title="View Source Code">Source Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Second Row -->
+      <div class="row g-4 mt-4">
+        
+        <div class="col-md-4">
+          <div class="card h-100 p-3">
+            <img src="images/projects/nlp.jpg" class="card-img-top" alt="Resume Parser" title="Resume Parser & Matcher">
+            <div class="card-body">
+              <h5 class="card-title">Resume Parser & Matcher — HR Tech</h5>
+              <p>Extract structured candidate data using NLP and NER, then rank/match resumes to job descriptions to streamline recruitment workflows.</p>
+              <!-- <p class="mb-2">
+                <span class="badge bg-secondary me-1">NLP</span>
+                <span class="badge bg-secondary me-1">spaCy</span>
+                <span class="badge bg-secondary me-1">NER</span>
+                <span class="badge bg-secondary me-1">Search/Match</span>
+                <span class="badge bg-secondary">HR Analytics</span>
+              </p> -->
+              <a href="#" class="btn btn-outline-info btn-sm" title="Read Blog Post">Blog Post</a>
+              <a href="#" class="btn btn-outline-light btn-sm ms-2" title="View Source Code">Source Code</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 p-3">
+            <img src="images/projects/obj.png" class="card-img-top" alt="Real-Time Object Detection" title="Real-Time Object Detection">
+            <div class="card-body">
+              <h5 class="card-title">Real-Time Object Detection — Retail Surveillance</h5>
+              <p>Deploy YOLO/Faster R-CNN for live video analytics to automate people counting, queue detection, and loss-prevention alerts in retail settings.</p>
+              <!-- <p class="mb-2">
+                <span class="badge bg-secondary me-1">Computer Vision</span>
+                <span class="badge bg-secondary me-1">YOLO</span>
+                <span class="badge bg-secondary me-1">OpenCV</span>
+                <span class="badge bg-secondary me-1">Edge Infer.</span>
+                <span class="badge bg-secondary">Video Analytics</span>
+              </p> -->
+              <a href="#" class="btn btn-outline-info btn-sm" title="Read Blog Post">Blog Post</a>
+              <a href="#" class="btn btn-outline-light btn-sm ms-2" title="View Source Code">Source Code</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 p-3">
+            <img src="images/projects/genai.jpg" class="card-img-top" alt="AI Story Writer" title="AI Story/Poem Writer">
+            <div class="card-body">
+              <h5 class="card-title">AI Story/Poem Writer — Content Marketing</h5>
+              <p>Leverage large language models to generate branded stories and poems, personalize content at scale, and integrate with CMS for campaigns.</p>
+              <!-- <p class="mb-2">
+                <span class="badge bg-secondary me-1">LLMs</span>
+                <span class="badge bg-secondary me-1">Prompt Eng.</span>
+                <span class="badge bg-secondary me-1">NLP</span>
+                <span class="badge bg-secondary">API Integration</span>
+              </p> -->
+              <a href="#" class="btn btn-outline-info btn-sm" title="Read Blog Post">Blog Post</a>
+              <a href="#" class="btn btn-outline-light btn-sm ms-2" title="View Source Code">Source Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Third Row -->
+      <div class="row g-4 mt-4">
+        <div class="col-md-4">
+          <div class="card h-100 p-3">
+            <img src="images/projects/ipa.png" class="card-img-top" alt="Intelligent Workflow Automation Bot" title="Intelligent Workflow Automation Bot">
+            <div class="card-body">
+              <h5 class="card-title">Intelligent Workflow Automation Bot — Enterprise</h5>
+              <p>Design an agentic AI/RPA system that autonomously processes communications, extracts tasks/events, automates updates, and orchestrates enterprise workflows.</p>
+              <!-- <p class="mb-2">
+                <span class="badge bg-secondary me-1">Agentic AI</span>
+                <span class="badge bg-secondary me-1">RPA</span>
+                <span class="badge bg-secondary me-1">APIs</span>
+                <span class="badge bg-secondary me-1">Orchestration</span>
+                <span class="badge bg-secondary">LangChain</span>
+              </p> -->
+              <a href="#" class="btn btn-outline-info btn-sm" title="Read Blog Post">Blog Post</a>
+              <a href="#" class="btn btn-outline-light btn-sm ms-2" title="View Source Code">Source Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Skills (Courses) Section ===== -->
+  <section id="skills" class="py-5 text-center">
+    <div class="container">
+      <h2 class="fw-bold mb-5">Skills</h2>
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-4">
+  <div class="card h-100 p-3">
+    <img src="images/skills/datascience.png" class="card-img-top" alt="Data Science & AI Masters 2025" title="Data Science & AI Masters 2025">
+    <div class="card-body">
+      <h5 class="card-title">Data Science & AI Masters 2025</h5>
+      <p>Comprehensive program covering Python to Gen AI with hands-on projects and real-world applications.</p>
+
+      <!-- <div class="skills-list text-start">
+              <h6 class="text-info mt-3">Skills Gained:</h6>
+              <ul class="list-unstyled">
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Python</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Statistics</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Exploratory Data Analysis (EDA)</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Machine Learning (ML)</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Deep Learning (DL)</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Natural Language Processing (NLP)</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Transformers</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Generative AI</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Agentic AI</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Model Deployment</li>
+              </ul>
+            </div> -->
+
+
+      <a href="#" class="btn btn-outline-info btn-sm" title="Go to Course">Go to Course</a>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="card h-100 p-3">
+    <img src="images/skills/dataanalyst.png" class="card-img-top" alt="Complete Data Analyst Bootcamp" title="Complete Data Analyst Bootcamp">
+    <div class="card-body">
+      <h5 class="card-title">Complete Data Analyst Bootcamp</h5>
+      <p>Intensive training from basics to advanced concepts in data analysis and visualization.</p>
+
+      <!-- <div class="skills-list text-start">
+              <h6 class="text-info mt-3">Skills Gained:</h6>
+              <ul class="list-unstyled">
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Statistics</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>SQL</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Power BI</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Tableau</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Excel</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>AWS</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Snowflake</li>
+                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Prompt Engineering</li>
+              </ul>
+            </div> -->
+
+            
+      <a href="#" class="btn btn-outline-info btn-sm" title="Go to Bootcamp">Go to Bootcamp</a>
+    </div>
+  </div>
+</div>
+        <!-- <div class="col-md-5">
+          <div class="card p-4 shadow-lg h-100">
+            <img src="images/skills/datascience.png" alt="Data Science" class="mb-3 mx-auto img-fluid skills-img" title="Data Science & AI Masters 2025" width="400" height="200">
+            <h5>Data Science & AI Masters 2025</h5>
+            <p>Comprehensive program covering Python to Gen AI with hands-on projects and real-world applications.</p>
+            <a href="#" class="text-info mt-3" title="Go to Course">Link to Course</a>
+          </div>
+        </div> -->
+        <!-- <div class="col-md-5">
+          <div class="card p-4 shadow-lg h-100">
+            <img src="images/skills/dataanalyst.png" alt="Data Analysis" class="mb-3 mx-auto img-fluid skills-img" title="Complete Data Analyst Bootcamp">
+            <h5>Complete Data Analyst Bootcamp</h5>
+            <p>Intensive training from basics to advanced concepts in data analysis and visualization.</p>
+            <a href="#" class="text-info mt-3" title="Go to Bootcamp">Link to the Bootcamp</a>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contact Section ===== -->
+  <section id="contact" class="py-5 text-center">
+    <div class="container">
+      <h2 class="fw-bold mb-4">Contact Me</h2>
+      <div class="d-flex flex-column flex-md-row justify-content-center align-items-center">
+        <div class="me-md-5 mb-3 mb-md-0"><i class="bi bi-envelope-fill me-2"></i>ysanipini@gmail.com</div>
+        <div><i class="bi bi-telephone-fill me-2"></i> +91 9110738693</div>
+      </div>
+    </div>
+  </section>
+
+  <button id="backToTop" aria-label="Scroll to Top"><i class="bi bi-arrow-up"></i></button>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const backToTop = document.getElementById("backToTop");
+    window.onscroll = function() {
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        backToTop.style.display = "flex";
+      } else {
+        backToTop.style.display = "none";
+      }
+    };
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+    const sections = document.querySelectorAll("section");
+    sections.forEach((section, index) => {
+      if (index % 3 === 0) section.classList.add("fade-left");
+      else if (index % 3 === 1) section.classList.add("fade-right");
+      else section.classList.add("fade-bottom");
+    });
+    const revealOnScroll = () => {
+      const triggerBottom = window.innerHeight * 0.85;
+      sections.forEach(sec => {
+        const boxTop = sec.getBoundingClientRect().top;
+        if (boxTop < triggerBottom) sec.classList.add("visible");
+        else sec.classList.remove("visible");
+      });
+    };
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
+  </script>
+</body>
+</html>
